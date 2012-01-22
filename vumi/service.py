@@ -81,7 +81,7 @@ class AmqpFactory(protocol.ReconnectingClientFactory):
         return self.amqp_client
 
     def clientConnectionFailed(self, connector, reason):
-        log.err("Connection failed: %r" % (reason,))
+        log.err(reason, 'Connection failed')
         self.worker._amqp_connection_failed()
         self.amqp_client = None
         protocol.ReconnectingClientFactory.clientConnectionFailed(
@@ -91,7 +91,7 @@ class AmqpFactory(protocol.ReconnectingClientFactory):
         if not self.worker.running:
             # We've specifically asked for this disconnect.
             return
-        log.err("Client connection lost: %r" % (reason,))
+        log.err(reason, 'Client connection lost')
         self.worker._amqp_connection_failed()
         self.amqp_client = None
         protocol.ReconnectingClientFactory.clientConnectionLost(
@@ -320,7 +320,7 @@ class Consumer(object):
                     message = yield self.queue.get()
                     yield self.consume(message)
             except txamqp.queue.Closed, e:
-                log.err("Queue has closed", e)
+                log.err(e, 'Queue has closed')
 
         read_messages()
         yield None
