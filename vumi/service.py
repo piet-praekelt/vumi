@@ -7,6 +7,7 @@ from twisted.python import log, usage
 from twisted.application.service import MultiService
 from twisted.application.internet import TCPClient
 from twisted.internet.defer import inlineCallbacks, returnValue
+from twisted.internet.error import ConnectionDone
 from twisted.internet import protocol, reactor
 from twisted.web.server import Site
 from twisted.web.resource import Resource
@@ -102,11 +103,15 @@ class WorkerAMQClient(AMQClient):
     @inlineCallbacks
     def connectionMade(self):
         AMQClient.connectionMade(self)
-        yield self.authenticate(self.vumi_options['username'],
-                                self.vumi_options['password'])
-        # authentication was successful
-        log.msg("Got an authenticated connection")
-        yield self.connected_callback(self)
+        try:
+            yield self.authenticate(self.vumi_options['username'],
+                                    self.vumi_options['password'])
+        except ConnectionDone:
+            log.msg('Lost connection during authentication. Check client credentials?')
+        else:
+            # authentication was successful
+            log.msg("Got an authenticated connection")
+            yield self.connected_callback(self)
 
     @inlineCallbacks
     def get_channel(self, channel_id=None):
