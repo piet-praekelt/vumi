@@ -6,6 +6,6 @@
     "transport_type": "sms",
     "transport_metadata": {
         // this is a dictionary containing
-        // transport specific dataT
+        // transport specific data
     }
 }
