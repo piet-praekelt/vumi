@@ -61,7 +61,7 @@ class Transport(Worker):
 
     @inlineCallbacks
     def stopWorker(self):
-        while self._consumers:
+        while getattr(self, '_consumers', []):
             consumer = self._consumers.pop()
             yield consumer.stop()
         yield self.teardown_transport()
