@@ -12,7 +12,7 @@ from twisted.internet import protocol, reactor
 from twisted.web.server import Site
 from twisted.web.resource import Resource
 import txamqp
-from txamqp.client import TwistedDelegate
+from txamqp.client import TwistedDelegate, Closed
 from txamqp.content import Content
 from txamqp.protocol import AMQClient
 
@@ -108,6 +108,8 @@ class WorkerAMQClient(AMQClient):
                                     self.vumi_options['password'])
         except ConnectionDone:
             log.msg('Lost connection during authentication. Check client credentials?')
+        except Closed as e:
+            log.err(e, 'AMQ channel closed during authentication. Check server configuration?')
         else:
             # authentication was successful
             log.msg("Got an authenticated connection")
