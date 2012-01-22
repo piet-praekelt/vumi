@@ -8,9 +8,9 @@ Notes
 
 Default allowed keys:
 
-	* content
-	* to_addr
-	* from_addr
+* `content`
+* `to_addr`
+* `from_addr`
 
 Others can be allowed by specifying the `allowed_fields` in the configuration file.
 
