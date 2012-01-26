@@ -29,6 +29,7 @@ For developers:
    routing-naming-conventions.rst
    how-we-do-releases.rst
    coding-guidelines.rst
+   reference/modules.rst
 
 Indices and tables
 ==================
