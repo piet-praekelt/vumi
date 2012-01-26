@@ -1,7 +1,7 @@
 #!/bin/sh -e
 
-trial="$(which trail || exit)"
-coverage="$(which coverage || which python-coverage || exit)"
+trial="$(which trial || echo "${trial:?not found (is Twisted installed?)}";)"
+coverage="$(which coverage || which python-coverage || echo ${coverage:?not found (is coverage.py installed?)})"
 
 cd "$(dirname "$0")/.."
 
