@@ -32,6 +32,10 @@ extensions = [
     'tikz',
 ]
 
+# Fix crummy defaults: no downscaling, no borders.
+inheritance_graph_attrs = {'rankdir': 'LR', 'size': '""'}
+inheritance_node_attrs = {'shape': 'plaintext'}
+
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
