@@ -30,6 +30,7 @@ For developers:
    how-we-do-releases.rst
    coding-guidelines.rst
    reference/modules.rst
+   reference/inheritance.rst
 
 Indices and tables
 ==================
