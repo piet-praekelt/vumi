@@ -37,6 +37,7 @@ metric values like so::
    self.metrics["a.count"].inc()
 
 .. autoclass:: MetricManager
+    :noindex:
     :members:
 
 Metrics
@@ -58,13 +59,16 @@ class has a default list of aggregators but this may be overridden when
 a metric is created.
 
 .. autoclass:: Metric
+    :noindex:
     :members:
 
 .. autoclass:: Count
+    :noindex:
     :members:
     :show-inheritance:
 
 .. autoclass:: Timer
+    :noindex:
     :members:
     :show-inheritance:
 
@@ -106,6 +110,7 @@ class.
    performs the aggregation (usually an aggregation worker).
 
 .. autoclass:: Aggregator
+   :noindex:
    :members:
 
 
