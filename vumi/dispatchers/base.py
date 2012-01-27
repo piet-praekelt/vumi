@@ -133,7 +133,7 @@ class SimpleDispatchRouter(BaseDispatchRouter):
 
 
 class TransportToTransportRouter(BaseDispatchRouter):
-    """Simple dispatch router that maps transports to apps.
+    """Simple dispatch router that maps transports to transports.
     """
 
     def dispatch_inbound_message(self, msg):
