@@ -47,7 +47,6 @@ Subpackages
     vumi.transports.opera
     vumi.transports.smpp
     vumi.transports.telnet
-    vumi.transports.tests
     vumi.transports.truteq
     vumi.transports.twitter
     vumi.transports.vas2nets

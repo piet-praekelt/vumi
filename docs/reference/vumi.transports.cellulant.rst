@@ -16,11 +16,3 @@ cellulant Package
     :members:
     :undoc-members:
     :show-inheritance:
-
-Subpackages
------------
-
-.. toctree::
-
-    vumi.transports.cellulant.tests
-

@@ -9,14 +9,6 @@ prelaunch Package
     :undoc-members:
     :show-inheritance:
 
-:mod:`tests` Module
--------------------
-
-.. automodule:: vumi.webapp.prelaunch.tests
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 :mod:`urls` Module
 ------------------
 

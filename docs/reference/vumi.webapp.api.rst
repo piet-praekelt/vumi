@@ -88,7 +88,4 @@ Subpackages
 
     vumi.webapp.api.base
     vumi.webapp.api.gateways
-    vumi.webapp.api.management
-    vumi.webapp.api.migrations
-    vumi.webapp.api.tests
 

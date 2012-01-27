@@ -72,13 +72,11 @@ Subpackages
 
     vumi.application
     vumi.blinkenlights
-    vumi.campaigns
     vumi.database
     vumi.demos
     vumi.dispatchers
     vumi.resources
     vumi.scripts
-    vumi.tests
     vumi.transports
     vumi.webapp
     vumi.workers

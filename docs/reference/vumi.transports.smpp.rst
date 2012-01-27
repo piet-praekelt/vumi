@@ -40,11 +40,3 @@ smpp Package
     :members:
     :undoc-members:
     :show-inheritance:
-
-Subpackages
------------
-
-.. toctree::
-
-    vumi.transports.smpp.tests
-

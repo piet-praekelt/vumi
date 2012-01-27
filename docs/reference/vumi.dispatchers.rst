@@ -15,5 +15,4 @@ Subpackages
 .. toctree::
 
     vumi.dispatchers.simple
-    vumi.dispatchers.tests
 

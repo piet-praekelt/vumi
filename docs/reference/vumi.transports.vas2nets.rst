@@ -24,11 +24,3 @@ vas2nets Package
     :members:
     :undoc-members:
     :show-inheritance:
-
-Subpackages
------------
-
-.. toctree::
-
-    vumi.transports.vas2nets.tests
-

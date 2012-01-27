@@ -16,11 +16,3 @@ scripts Package
     :members:
     :undoc-members:
     :show-inheritance:
-
-Subpackages
------------
-
-.. toctree::
-
-    vumi.scripts.tests
-

@@ -32,11 +32,3 @@ application Package
     :members:
     :undoc-members:
     :show-inheritance:
-
-Subpackages
------------
-
-.. toctree::
-
-    vumi.application.tests
-

@@ -16,11 +16,3 @@ vodacom_messaging Package
     :members:
     :undoc-members:
     :show-inheritance:
-
-Subpackages
------------
-
-.. toctree::
-
-    vumi.transports.vodacom_messaging.tests
-

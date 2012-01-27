@@ -48,11 +48,3 @@ demos Package
     :members:
     :undoc-members:
     :show-inheritance:
-
-Subpackages
------------
-
-.. toctree::
-
-    vumi.demos.tests
-

@@ -8,11 +8,3 @@ database Package
     :members:
     :undoc-members:
     :show-inheritance:
-
-Subpackages
------------
-
-.. toctree::
-
-    vumi.database.tests
-

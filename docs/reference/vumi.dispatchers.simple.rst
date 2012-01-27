@@ -8,11 +8,3 @@ simple Package
     :members:
     :undoc-members:
     :show-inheritance:
-
-Subpackages
------------
-
-.. toctree::
-
-    vumi.dispatchers.simple.tests
-
