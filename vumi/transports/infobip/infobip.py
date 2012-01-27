@@ -16,7 +16,7 @@ from vumi.utils import get_deploy_int
 
 
 class InfobipTransport(HttpRpcTransport):
-    """Infobip transport.
+    u"""Infobip transport.
 
     Currently only supports the Infobip USSD interface.
 
