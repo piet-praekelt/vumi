@@ -6,10 +6,12 @@
 Welcome to Vumi's documentation!
 ================================
 
-Contents:
+User manual
+-----------
 
 .. toctree::
    :maxdepth: 1
+   :numbered:
 
    overview.rst
    installation.rst
@@ -21,7 +23,8 @@ Contents:
    roadmap.rst
    release-notes.rst
 
-For developers:
+For developers
+--------------
 
 .. toctree::
    :maxdepth: 1
@@ -29,6 +32,13 @@ For developers:
    routing-naming-conventions.rst
    how-we-do-releases.rst
    coding-guidelines.rst
+
+Reference
+---------
+
+.. toctree::
+   :maxdepth: 1
+
    reference/modules.rst
    reference/inheritance.rst
 
