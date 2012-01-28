@@ -298,3 +298,32 @@ def get_deploy_int(deployment):
         "/qa": 9,
         }
     return lookup.get(deployment.lower(), 7)
+
+
+if sys.version_info < (3, 2):
+    __default = object()
+
+    def safe_hasattr(obj, name):
+        """
+        Safe version `hasattr`.
+
+        To use this as a drop-in replacement in your code::
+
+            from vumi.utils import safe_hasattr as hasattr
+
+        For background and rationale, see:
+
+        * `'hasattr' fix to suppress only AttributeError
+          <http://bugs.python.org/issue9666>`_
+        * `'hasattr' is broken by design
+          <http://mail.python.org/pipermail/python-dev/2010-August/103178.html>`_
+        * `Remove uses of hasattr
+          <http://www.selenic.com/pipermail/mercurial-devel/2011-July/033360.html>`_
+        * `check-code: disallow use of hasattr()
+          <http://selenic.com/hg/rev/5a0fdc715769>`_
+
+        """
+        return getattr(obj, name, __default) is not __default
+else:
+    # for Python 3.2 and later, the built-in hasattr is safe.
+    safe_hasattr = hasattr

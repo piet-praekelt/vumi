@@ -10,7 +10,8 @@ from twisted.internet.protocol import Protocol, Factory
 
 
 from vumi.utils import (normalize_msisdn, vumi_resource_path, cleanup_msisdn,
-                        get_operator_name, http_request, http_request_full)
+                        get_operator_name, http_request, http_request_full,
+                        safe_hasattr)
 
 
 class UtilsTestCase(TestCase):
@@ -183,3 +184,54 @@ class HttpUtilsTestCase(TestCase):
 
         data = yield http_request(self.url, '')
         self.assertEqual(data, "Yay")
+
+
+class SafeHasattrTestCase(TestCase):
+    """
+    Tests for `safe_hasattr`.
+    """
+
+    def test_hasattr(self):
+        """
+        Base use.
+        """
+        class Obj(object):
+            attr = object()
+        self.assertEqual(safe_hasattr(Obj(), 'attr'), True)
+        self.assertEqual(safe_hasattr(Obj(), 'missing'), False)
+
+    def test_false_attr(self):
+        """
+        Attributes should not be masked by false values.
+        """
+        for value in [None, False, 0, '', (), [], {}]:
+            class Obj(object):
+                attr = value
+            self.assertEqual(safe_hasattr(Obj(), 'attr'), True, value)
+
+    def test_descriptor(self):
+        """
+        Raising `AttributeError` from a descriptor should work.
+        """
+        class Obj(object):
+            @property
+            def attr(self):
+                raise AttributeError()
+        self.assertEqual(safe_hasattr(Obj, 'attr'), True)
+        self.assertEqual(safe_hasattr(Obj(), 'attr'), False)
+
+    def test_error(self):
+        """
+        Non-`AttributeError` exceptions should propagate.
+        """
+        class Obj(object):
+            @property
+            def attr(self):
+                raise RuntimeError()
+        self.assertRaises(RuntimeError, lambda: safe_hasattr(Obj(), 'attr'))
+
+    def test_name_type(self):
+        """
+        Non-string attribute names should raise `TypeError`.
+        """
+        self.assertRaises(TypeError, lambda: safe_hasattr(object(), 5))
