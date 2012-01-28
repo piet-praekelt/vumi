@@ -17,7 +17,7 @@ from vumi.tests.utils import get_stubbed_worker
 from vumi.service import Worker
 from vumi.transports.vas2nets.transport_stubs import (
     FakeVas2NetsHandler, FakeVas2NetsWorker)
-from vumi.utils import StringProducer
+from vumi.utils import StringProducer, safe_hasattr as hasattr
 
 
 def create_request(params={}, path='/', method='POST'):

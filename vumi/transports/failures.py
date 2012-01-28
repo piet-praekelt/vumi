@@ -10,7 +10,7 @@ from twisted.internet.task import LoopingCall
 from twisted.python import log
 
 from vumi.service import Worker
-from vumi.utils import get_deploy_int
+from vumi.utils import get_deploy_int, safe_hasattr as hasattr
 from vumi.message import TransportMessage, to_json
 
 

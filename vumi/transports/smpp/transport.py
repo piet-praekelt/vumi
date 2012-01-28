@@ -7,7 +7,7 @@ from twisted.python import log
 from twisted.internet import reactor
 
 # from vumi.service import Worker
-from vumi.utils import get_operator_number, get_deploy_int
+from vumi.utils import get_operator_number, get_deploy_int, safe_hasattr as hasattr
 from vumi.transports.base import Transport
 from vumi.transports.smpp.client import EsmeTransceiverFactory
 from vumi.transports.failures import FailureMessage

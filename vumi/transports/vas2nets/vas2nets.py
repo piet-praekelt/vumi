@@ -15,7 +15,7 @@ from twisted.internet.defer import inlineCallbacks
 from twisted.internet.protocol import Protocol
 from twisted.internet.error import ConnectionRefusedError
 
-from vumi.utils import http_request_full, normalize_msisdn
+from vumi.utils import http_request_full, normalize_msisdn, safe_hasattr as hasattr
 from vumi.transports.base import Transport
 from vumi.transports.failures import TemporaryFailure, PermanentFailure
 from vumi.errors import VumiError

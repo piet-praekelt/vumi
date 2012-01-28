@@ -18,7 +18,7 @@ from txamqp.protocol import AMQClient
 from vumi.errors import VumiError
 from vumi.message import Message
 from vumi.utils import (load_class_by_string, vumi_resource_path, http_request,
-                        basic_auth_string)
+                        basic_auth_string, safe_hasattr as hasattr)
 
 
 SPECS = {}

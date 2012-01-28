@@ -16,7 +16,7 @@ from twisted.web.resource import Resource
 from twisted.web.client import Agent
 from twisted.web.http_headers import Headers
 
-from vumi.utils import StringProducer
+from vumi.utils import StringProducer, safe_hasattr as hasattr
 from vumi.service import Worker
 
 

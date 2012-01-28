@@ -6,7 +6,7 @@ from twisted.internet.defer import inlineCallbacks
 
 from vumi.service import Worker, Consumer, Publisher
 from vumi.session import getVumiSession, delVumiSession, TraversedDecisionTree
-from vumi.utils import get_deploy_int
+from vumi.utils import get_deploy_int, safe_hasattr as hasattr
 
 
 class SessionConsumer(Consumer):

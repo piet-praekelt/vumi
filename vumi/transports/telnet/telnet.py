@@ -10,6 +10,7 @@ from twisted.python import log
 
 from vumi.transports import Transport
 from vumi.message import TransportUserMessage
+from vumi.utils import safe_hasattr as hasattr
 
 
 class TelnetTransportProtocol(TelnetProtocol):
