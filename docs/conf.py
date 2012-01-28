@@ -27,10 +27,15 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.graphviz',
     'sphinx.ext.inheritance_diagram',
+    'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
     'sphinx.ext.viewcode',
     'tikz',
 ]
+
+intersphinx_mapping = {
+    'python': ('http://docs.python.org/', None),
+}
 
 # Fix crummy defaults: no downscaling, no borders.
 inheritance_graph_attrs = {'rankdir': 'LR', 'size': '""'}
