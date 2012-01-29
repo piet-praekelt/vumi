@@ -99,8 +99,23 @@ class AmqpFactory(protocol.ReconnectingClientFactory):
 
 
 class WorkerAMQClient(AMQClient):
+    """
+    AMQ client for a `Worker`.
+
+    :ivar dict vumi_options:
+        Used to obtain AMQP credentials, and initialize publishers/consumers.
+
+    :ivar callable connected_callback:
+        :samp:`f({client})` -> `Deferred` or `None`
+    """
+
     @inlineCallbacks
     def connectionMade(self):
+        """
+        Authenticate, and if successful, call :attr:`connected_callback`.
+
+        :rtype: `Deferred`
+        """
         AMQClient.connectionMade(self)
         try:
             yield self.authenticate(self.vumi_options['username'],
@@ -213,26 +228,55 @@ class Worker(MultiService, object):
         self._amqp_client = None
 
     def startWorker(self):
-        # I hate camelCasing method but since Twisted has it as a
-        # standard I voting to stick with it
+        """
+        Called when starting up, and the AMQP client is connected and ready.
+
+        Subclasses must override this to start any required consumers,
+        publishers, and other resources.
+
+        :rtype: `Deferred` or `None`
+        """
         raise NotImplementedError("Subclasses must implement startWorker().")
 
     def stopWorker(self):
-        pass
+        """
+        Called when shutting down.
+
+        Subclasses should extend this to stop any consumers, publishers, and
+        other resources started by :meth:`startWorker()`.
+
+        :rtype: `Deferred` or `None`
+        """
 
     @inlineCallbacks
     def stopService(self):
+        """
+        Stop this worker. See :meth:`stopWorker()`.
+
+        :rtype: `Deferred` or `None`
+        """
         if self.running:
             yield self.stopWorker()
         yield super(Worker, self).stopService()
 
-    def routing_key_to_class_name(self, routing_key):
+    @staticmethod
+    def routing_key_to_class_name(routing_key):
+        """
+        Translate a AMQP routing key to a CamelCase class name.
+
+        >>> Worker.routing_key_to_class_name('ham.spam.eggs')
+        'HamSpamEggs'
+        """
         return ''.join(map(lambda s: s.capitalize(), routing_key.split('.')))
 
     def consume(self, routing_key, callback, queue_name=None,
                 exchange_name='vumi', exchange_type='direct', durable=True,
                 message_class=None, paused=False):
+        """
+        Create and start a new `Consumer` with the given attributes.
 
+        :rtype: `Deferred` :class:`Consumer`
+        """
         # use the routing key to generate the name for the class
         # amq.routing.key -> AmqRoutingKey
         dynamic_name = self.routing_key_to_class_name(routing_key)
@@ -252,11 +296,19 @@ class Worker(MultiService, object):
         return self.start_consumer(klass, callback)
 
     def start_consumer(self, consumer_class, *args, **kw):
+        """
+        See :meth:`WorkerAMQClient.start_consumer()`.
+        """
         return self._amqp_client.start_consumer(consumer_class, *args, **kw)
 
     def publish_to(self, routing_key,
                    exchange_name='vumi', exchange_type='direct', durable=True,
                    delivery_mode=2):
+        """
+        Create and start a new `Publisher` with the given attributes.
+
+        :rtype: `Deferred` :class:`Publisher`
+        """
         class_name = self.routing_key_to_class_name(routing_key)
         publisher_class = type("%sDynamicPublisher" % class_name, (Publisher,),
             {
@@ -269,6 +321,9 @@ class Worker(MultiService, object):
         return self.start_publisher(publisher_class)
 
     def start_publisher(self, publisher_class, *args, **kw):
+        """
+        See :meth:`WorkerAMQClient.start_publisher()`.
+        """
         return self._amqp_client.start_publisher(publisher_class, *args, **kw)
 
     def start_web_resources(self, resources, port, site_class=None):
@@ -492,6 +547,10 @@ class Publisher(object):
 class WorkerCreator(object):
     """
     Helper to create and configure workers.
+
+    .. seealso::
+        `twisted.plugins.vumi_worker_starter`
+            Integration with :program:`twistd`.
 
     :ivar dict options: Vumi options.
     """

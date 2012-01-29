@@ -6,6 +6,9 @@ from vumi.tests.utils import (fake_amq_message, get_stubbed_worker)
 from vumi.message import Message
 
 
+__doctests__ = ['vumi.service']
+
+
 class ServiceTestCase(TestCase):
 
     def setUp(self):
@@ -53,6 +56,9 @@ class LoadableTestWorker(Worker):
 
 
 class NoQueueWorkerCreator(WorkerCreator):
+    """
+    Stub `WorkerCreator` to avoid making an AMQP connection.
+    """
     def _connect(self, *_args, **_kw):
         pass
 
