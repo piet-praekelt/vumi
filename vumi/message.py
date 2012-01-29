@@ -44,7 +44,7 @@ class Message(object):
     used internally in Vumi and while being in transit
     over AMQP
 
-    scary transport format -> Vumi Tansport -> Unified Message -> Vumi Worker
+    scary transport format -> Vumi Transport -> Unified Message -> Vumi Worker
 
     """
 
