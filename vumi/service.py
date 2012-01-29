@@ -215,7 +215,7 @@ class Worker(MultiService, object):
     def startWorker(self):
         # I hate camelCasing method but since Twisted has it as a
         # standard I voting to stick with it
-        raise NotImplementedError("Subclasses should implement startWorker().")
+        raise NotImplementedError("Subclasses must implement startWorker().")
 
     def stopWorker(self):
         pass
