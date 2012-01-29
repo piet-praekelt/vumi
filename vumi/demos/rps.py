@@ -10,7 +10,6 @@ class MultiPlayerGameWorker(ApplicationWorker):
 
     @inlineCallbacks
     def startWorker(self):
-        """docstring for startWorker"""
         self.games = {}
         self.open_game = None
         self.game_setup()

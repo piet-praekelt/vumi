@@ -76,7 +76,6 @@ class TicTacToeWorker(ApplicationWorker):
 
     @inlineCallbacks
     def startWorker(self):
-        """docstring for startWorker"""
         self.games = {}
         self.open_game = None
         self.publisher = yield self.publish_to(
