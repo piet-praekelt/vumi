@@ -78,7 +78,7 @@ class Message(object):
         return cls(_process_fields=False, **from_json(json_string))
 
     def __str__(self):
-        return u"<Message payload=\"%s\">" % repr(self.payload)
+        return '<Message payload="%s">' % repr(self.payload)
 
     def __repr__(self):
         return str(self)

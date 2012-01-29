@@ -71,7 +71,7 @@ class Message(object):
         return cls(**message)
 
     def __str__(self):
-        return u"<Message v%s:%s %s src=(%s, %s) payload=\"%s\">" % (
+        return '<Message v%s:%s %s src=(%s, %s) payload="%s">' % (
             self.VERSION, self.message_type, self.timestamp,
             self.source_name, self.source_id, repr(self.payload))
 
