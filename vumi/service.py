@@ -432,7 +432,7 @@ class Publisher(object):
         # Don't check for bound routing keys on RPC reply exchanges
         # The one-use queues are changing too frequently to cache efficiently,
         # too many http calls to RabbitMQ Management will be required,
-        # and the auto-generated queues & routing_keys are unlikley to
+        # and the auto-generated queues & routing_keys are unlikely to
         # result in errors where routing keys are unbound
         if self.exchange_name[-4:].lower() == '_rpc':
             returnValue(True)
