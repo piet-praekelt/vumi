@@ -136,12 +136,16 @@ class TransportMessage(Message):
 
 
 class TransportUserMessage(TransportMessage):
-    """Message to or from a user.
+    """
+    Message to or from a user.
 
-    transport_type = sms, ussd, etc
-    helper_metadata = for use by dispathers and off-to-the-side
-                      components like failure workers (not for use
-                      by transports or message workers).
+    Fields:
+
+        `transport_type`
+            ``sms``, ``ussd``, etc.
+        `helper_metadata`
+            For use by dispathers and off-to-the-side components like failure
+            workers (not for use by transports or message workers).
     """
 
     MESSAGE_TYPE = 'user_message'

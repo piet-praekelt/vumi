@@ -9,29 +9,28 @@ from vumi.transports.httprpc import HttpRpcTransport
 
 class HttpApiTransport(HttpRpcTransport):
     """
-    Native HTTP API for getting messages into vumi.
+    Native HTTP API for getting messages into Vumi.
 
     NOTE: This has no security. Put it behind a firewall or something.
 
-    Configuration Values
-    --------------------
-    web_path : str
-        The path relative to the host where this listens
-    web_port : int
-        The port this listens on
-    transport_name : str
-        The name this transport instance will use to create its queues
-    reply_expected : boolean (default False)
-        True if a reply message is expected
-    allowed_fields : list (default DEFAULT_ALLOWED_FIELDS class attribute)
-        The list of fields a request is allowed to contain
-        DEFAULT_ALLOWED_FIELDS = [content, to_addr, from_addr]
-    field_defaults : dict (default {})
-        Default values for fields not sent by the client
+    Configuration Values:
 
-    If reply_expected is True, the transport will wait for a reply message
+        ``web_path`` : `str`
+            The path relative to the host where this listens
+        ``web_port`` : `int`
+            The port this listens on
+        ``transport_name`` : `str`
+            The name this transport instance will use to create its queues
+        ``reply_expected`` : `bool` (default `False`)
+            True if a reply message is expected
+        ``allowed_fields`` : `list` (default :attr:`DEFAULT_ALLOWED_FIELDS`)
+            The list of fields a request is allowed to contain
+        ``field_defaults`` : `dict` (default ``{}``)
+            Default values for fields not sent by the client
+
+    If ``reply_expected`` is True, the transport will wait for a reply message
     and will return the reply's content as the HTTP response body. If False,
-    the message_id of the dispatched incoming message will be returned.
+    the ``message_id`` of the dispatched incoming message will be returned.
     """
 
     transport_type = 'http_api'

@@ -262,7 +262,7 @@ class Timer(Metric):
 
 
 class MetricsConsumer(Consumer):
-    """Utility for consuming metrics published by :class:`MetricManager`s.
+    """Utility for consuming metrics published by :class:`MetricManager`\s.
 
     :type callback: f(metric_name, aggregators, values)
     :param callback:

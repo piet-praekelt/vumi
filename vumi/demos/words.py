@@ -8,13 +8,14 @@ from vumi.application import ApplicationWorker
 
 
 class SimpleAppWorker(ApplicationWorker):
-    """Base class for very simple application workers.
+    """
+    Base class for very simple application workers.
 
-       Configuration
-       -------------
-       transport_name : str
-           Name of the transport.
-       """
+    Configuration:
+
+        ``transport_name`` : `str`
+            Name of the transport.
+    """
 
     def consume_user_message(self, msg):
         """

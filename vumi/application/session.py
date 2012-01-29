@@ -76,12 +76,12 @@ class SessionManager(object):
         """
         Schedule a session to timeout
 
-        Parameters
-        ----------
-        user_id : str
-            The user's id.
-        timeout : int
-            The number of seconds after which this session should expire
+        Parameters:
+
+            ``user_id`` : `str`
+                The user's id.
+            ``timeout`` : `int`
+                The number of seconds after which this session should expire
         """
         ukey = self.r_key('session', user_id)
         self.r_server.expire(ukey, timeout)
@@ -107,14 +107,13 @@ class SessionManager(object):
         """
         Save a session
 
-        Parameters
-        ----------
-        user_id : str
-            The user's id.
-        session : dict
-            The session info, nested dictionaries are not supported. Any
-            values that are dictionaries are converted to strings by Redis.
+        Parameters:
 
+            ``user_id`` : `str`
+                The user's id.
+            ``session`` : `dict`
+                The session info, nested dictionaries are not supported. Any
+                values that are dictionaries are converted to strings by Redis.
         """
         ukey = self.r_key('session', user_id)
         for s_key, s_value in session.items():

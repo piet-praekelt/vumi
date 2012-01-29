@@ -18,12 +18,12 @@ from vumi.blinkenlights.message20110818 import MetricMessage
 class AggregatedMetricConsumer(Consumer):
     """Consumer for aggregate metrics.
 
-    Parameters
-    ----------
-    callback : function (metric_name, values)
-        Called for each metric datapoint as it arrives.  The
-        parameters are metric_name (str) and values (a list of
-        timestamp and value pairs).
+    Parameters:
+
+        ``callback`` : ``f(metric_name, values)``
+            Called for each metric datapoint as it arrives.  The
+            parameters are metric_name (str) and values (a list of
+            timestamp and value pairs).
     """
     exchange_name = "vumi.metrics.aggregates"
     exchange_type = "direct"
@@ -58,15 +58,15 @@ class AggregatedMetricPublisher(Publisher):
 class TimeBucketConsumer(Consumer):
     """Consume time bucketed metric messages.
 
-    Parameters
-    ----------
-    bucket : int
-        Bucket to consume time buckets from.
-    callback : function, f(metric_name, aggregators, values)
-        Called for each metric datapoint as it arrives.
-        The parameters are metric_name (str),
-        aggregator (list of aggregator names) and values (a
-        list of timestamp and value pairs).
+    Parameters:
+
+        ``bucket`` : `int`
+            Bucket to consume time buckets from.
+        ``callback`` : ``f(metric_name, aggregators, values)``
+            Called for each metric datapoint as it arrives.
+            The parameters are metric_name (str),
+            aggregator (list of aggregator names) and values (a
+            list of timestamp and value pairs).
     """
     exchange_name = "vumi.metrics.buckets"
     exchange_type = "direct"
@@ -87,13 +87,13 @@ class TimeBucketConsumer(Consumer):
 class TimeBucketPublisher(Publisher):
     """Publish time bucketed metric messages.
 
-    Parameters
-    ----------
-    buckets : int
-        Total number of buckets messages are being
-        distributed to.
-    bucket_size : int, in seconds
-        Size of each time bucket in seconds.
+    Parameters:
+
+        ``buckets`` : `int`
+            Total number of buckets messages are being
+            distributed to.
+        ``bucket_size`` : `int`, in seconds
+            Size of each time bucket in seconds.
     """
     exchange_name = "vumi.metrics.buckets"
     exchange_type = "direct"
@@ -134,15 +134,15 @@ class MetricTimeBucket(Worker):
 
     There can be any number of :class:`MetricTimeBucket` workers.
 
-    Configuration Values
-    --------------------
-    buckets : int (N)
-        The total number of aggregator workers. :class:`MetricAggregator`
-        workers must be started with bucket numbers 0 to N-1 otherwise
-        metric data will go missing (or at best be stuck in a queue
-        somewhere).
-    bucket_size : int, in seconds
-        The amount of time each time bucket represents.
+    Configuration Values:
+
+        ``buckets`` : `int` (N)
+            The total number of aggregator workers. :class:`MetricAggregator`
+            workers must be started with bucket numbers 0 to N-1 otherwise
+            metric data will go missing (or at best be stuck in a queue
+            somewhere).
+        ``bucket_size`` : `int`, in seconds
+            The amount of time each time bucket represents.
     """
     @inlineCallbacks
     def startWorker(self):
@@ -166,16 +166,16 @@ class MetricAggregator(Worker):
 
     :class:`MetricAggregators` work in sets of N.
 
-    Configuration Values
-    --------------------
-    bucket : int, 0 to N-1
-        An aggregator needs to know which number out of N it is. This is
-        its bucket number.
-    bucket_size : int, in seconds
-        The amount of time each time bucket represents.
-    lag : int, seconds, optional
-        The number of seconds after a bucket's time ends to wait
-        before processing the bucket. Default is 5s.
+    Configuration Values:
+
+        ``bucket`` : `int`, 0 to N-1
+            An aggregator needs to know which number out of N it is. This is
+            its bucket number.
+        ``bucket_size`` : `int`, in seconds
+            The amount of time each time bucket represents.
+        ``lag`` : `int`, seconds, optional
+            The number of seconds after a bucket's time ends to wait
+            before processing the bucket. Default is 5s.
     """
 
     _time = time.time  # hook for faking time in tests
@@ -291,14 +291,14 @@ class RandomMetricsGenerator(Worker):
 
     Useful for tests and demonstrations.
 
-    Configuration Values
-    --------------------
-    manager_period : float in seconds, optional
-        How often to have the internal metric manager send metrics
-        messages. Default is 5s.
-    generator_period: float in seconds, optional
-        How often the random metric loop should send values to the
-        metric manager. Default is 1s.
+    Configuration Values:
+
+        ``manager_period`` : `float` in seconds, optional
+            How often to have the internal metric manager send metrics
+            messages. Default is 5s.
+        ``generator_period`` : `float` in seconds, optional
+            How often the random metric loop should send values to the
+            metric manager. Default is 1s.
     """
     # callback for tests, f(worker)
     # (or anyone else that wants to be notified when metrics are generated)

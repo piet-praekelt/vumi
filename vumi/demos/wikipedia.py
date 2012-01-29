@@ -23,15 +23,15 @@ class OpenSearch(object):
         Perform a query and returns a list of dictionaries with results
         matching the query.
 
-        Parameters
-        ----------
-        query : str
-            The search term.
-        limit : int, optional
-            How many results to get back, defaults to 10
-        namespace : int, optional
-            The namespace of the OpenSearch Suggestions extention, defaults
-            to 0
+        Parameters:
+
+            ``query`` : `str`
+                The search term.
+            ``limit`` : `int`, optional
+                How many results to get back, defaults to 10
+            ``namespace`` : `int`, optional
+                The namespace of the OpenSearch Suggestions extention, defaults
+                to 0
         """
         query_params = {
             'search': query.encode('utf-8'),

@@ -15,12 +15,12 @@ class MemoWorker(ApplicationWorker):
     """Watches for memos to users and notifies users of memos when users
     appear.
 
-    Configuration
-    -------------
-    transport_name : str
-        Name of the transport.
-    worker_name : str
-        Name of this worker. Used as part of the Redis key prefix.
+    Configuration:
+
+        ``transport_name`` : `str`
+            Name of the transport.
+        ``worker_name`` : `str`
+            Name of this worker. Used as part of the Redis key prefix.
     """
 
     MEMO_RE = re.compile(r'^\S+ tell (\S+) (.*)$')

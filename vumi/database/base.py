@@ -37,7 +37,7 @@ class TableNamePrefixFormatter(object):
 
     To use it, treat table names as keys into a format dict and then
     format with an instance of this class, constructed with the prefix
-    to use. For example::
+    to use. For example:
 
     >>> '%(mytable)s' % TableNamePrefixFormatter()
     'mytable'

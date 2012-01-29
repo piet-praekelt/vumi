@@ -13,14 +13,14 @@ import string
 class HangmanGame(object):
     """Represents a game of Hangman.
 
-       Parameters
-       ----------
-       word : str
-           Word to guess.
-       guesses : set, optional
-           Characters guessed so far. If None, defaults to the empty set.
-       msg : str, optional
-           Message set in reply to last user action. Defaults to 'New game!'.
+       Parameters:
+
+        ``word`` : `str`
+            Word to guess.
+        ``guesses`` : `set`, optional
+            Characters guessed so far. If `None`, defaults to the empty set.
+        ``msg`` : `str`, optional
+            Message set in reply to last user action. Defaults to 'New game!'.
        """
 
     UI_TEMPLATE = \
@@ -52,13 +52,14 @@ class HangmanGame(object):
         return cls(word=word, guesses=guesses, msg=msg)
 
     def event(self, message):
-        """Handle a user input string.
+        """
+        Handle a user input string.
 
-           Parameters
-           ----------
-           message : unicode
-               Message received from user.
-           """
+        Parameters:
+
+            ``message`` : `unicode`
+                Message received from user.
+        """
         message = message.lower()
         if not message:
             self.msg = u"Some input required please."
@@ -120,18 +121,19 @@ class HangmanGame(object):
 
 
 class HangmanWorker(ApplicationWorker):
-    """Worker that plays Hangman.
+    """
+    Worker that plays Hangman.
 
-       Configuration
-       -------------
-       transport_name : str
-           Name of the transport.
-       worker_name : str
-           Name of this set of hangman workers.
-       random_word_url : URL
-           Page to GET a random word from.
-           E.g. http://randomword.setgetgo.com/get.php
-       """
+    Configuration:
+
+        ``transport_name`` : `str`
+            Name of the transport.
+        ``worker_name`` : `str`
+            Name of this set of hangman workers.
+        ``random_word_url`` : URL
+            Page to GET a random word from.
+            E.g. http://randomword.setgetgo.com/get.php
+    """
 
     @inlineCallbacks
     def startWorker(self):
