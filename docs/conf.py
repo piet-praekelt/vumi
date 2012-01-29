@@ -33,6 +33,8 @@ extensions = [
     'tikz',
 ]
 
+autodoc_member_order = 'bysource'
+
 intersphinx_mapping = {
     'python': ('http://docs.python.org/', None),
 }
