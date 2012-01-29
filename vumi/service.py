@@ -493,7 +493,9 @@ class Publisher(object):
 
 class WorkerCreator(object):
     """
-    Creates workers
+    Helper to create and configure workers.
+
+    :ivar dict options: Vumi options.
     """
 
     def __init__(self, vumi_options):
@@ -502,9 +504,9 @@ class WorkerCreator(object):
     def create_worker(self, worker_class, config, timeout=30,
                       bindAddress=None):
         """
-        Create a worker factory, connect to AMQP and return the factory.
+        See :meth:`create_worker_by_class`.
 
-        Return value is the AmqpFactory instance containing the worker.
+        :param str worker_class: Fully-qualified name of the worker class.
         """
         return self.create_worker_by_class(
             load_class_by_string(worker_class), config, timeout=timeout,
@@ -512,6 +514,16 @@ class WorkerCreator(object):
 
     def create_worker_by_class(self, worker_class, config, timeout=30,
                                bindAddress=None):
+        """
+        Create a worker, and connect it with an `AmqpFactory`.
+
+        :param type worker_class: `Worker` subclass / constructor.
+        :param dict config: Worker configuration.
+        :param int timeout: Connection timeout in seconds.
+        :type bindAddress: `(host, port)` or `None`
+        :param bindAddress: Optional local bind address.
+        :returns: The connected worker instance.
+        """
         worker = worker_class(deepcopy(self.options), config)
         self._connect(worker, timeout=timeout, bindAddress=bindAddress)
         return worker
