@@ -17,9 +17,8 @@ class SimpleAppWorker(ApplicationWorker):
        """
 
     def consume_user_message(self, msg):
-        """Find or create a hangman game for this player.
-
-        Then process the user's message.
+        """
+        Reply using either `get_help()` or `process_message()`.
         """
         log.msg("User message: %s" % msg['content'])
         text = msg['content']
