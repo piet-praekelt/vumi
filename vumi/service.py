@@ -16,7 +16,6 @@ from txamqp.client import TwistedDelegate, Closed
 from txamqp.content import Content
 from txamqp.protocol import AMQClient
 
-from vumi.errors import VumiError
 from vumi.message import Message
 from vumi.utils import (load_class_by_string, vumi_resource_path, http_request,
                         basic_auth_string)
@@ -216,8 +215,7 @@ class Worker(MultiService, object):
     def startWorker(self):
         # I hate camelCasing method but since Twisted has it as a
         # standard I voting to stick with it
-        raise VumiError("You need to subclass Worker and its "
-                        "startWorker method")
+        raise NotImplementedError("Subclasses should implement startWorker().")
 
     def stopWorker(self):
         pass
