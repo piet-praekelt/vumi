@@ -21,7 +21,7 @@ class OldSimpleHttpTransport(HttpRpcTransport):
     web_port : int
         The port this listens on
     transport_name : str
-        The name this transport instance will use to create it's queues
+        The name this transport instance will use to create its queues
     identities : dictionary
         user : str
         password : str

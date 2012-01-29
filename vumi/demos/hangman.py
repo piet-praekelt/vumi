@@ -52,7 +52,7 @@ class HangmanGame(object):
         return cls(word=word, guesses=guesses, msg=msg)
 
     def event(self, message):
-        """Handle an user input string.
+        """Handle a user input string.
 
            Parameters
            ----------
