@@ -38,7 +38,7 @@ class SimpleAppWorker(ApplicationWorker):
 
 
 class EchoWorker(SimpleAppWorker):
-    """Echos text back to the sender."""
+    """Echoes text back to the sender."""
 
     def process_message(self, data):
         return data
