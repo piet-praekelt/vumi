@@ -6,7 +6,9 @@ from vumi.tests.utils import (fake_amq_message, get_stubbed_worker)
 from vumi.message import Message
 
 
-__doctests__ = ['vumi.service']
+# XXX:2012-01-30: Disable for now; trial's subunit reporter seems to break
+# other subunit tools in the presence of doctests.
+#__doctests__ = ['vumi.service']
 
 
 class ServiceTestCase(TestCase):
