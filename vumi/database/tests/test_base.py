@@ -39,7 +39,7 @@ class UglyModelTestCase(TestCase):
     @inlineCallbacks
     def setup_db(self, *tables, **kw):
         dbname = kw.pop('dbname', 'test')
-        self._test_tables = tables
+        self._test_tables = list(tables)
 
         try:
             yield self._sdb(dbname)
