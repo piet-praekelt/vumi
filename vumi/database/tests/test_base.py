@@ -2,7 +2,7 @@ from datetime import datetime
 
 import pytz
 from twisted.trial.unittest import TestCase, SkipTest
-from twisted.internet.defer import succeed
+from twisted.internet.defer import succeed, inlineCallbacks
 
 from vumi.tests.utils import UTCNearNow
 from vumi.database.base import (setup_db, get_db, close_db, UglyModel,
@@ -36,44 +36,28 @@ class UglyModelTestCase(TestCase):
         except ImportError, e:
             raise SkipTest("Unable to import DBAPI module: %s" % (e,))
 
+    @inlineCallbacks
     def setup_db(self, *tables, **kw):
         dbname = kw.pop('dbname', 'test')
         self._test_tables = tables
 
-        def _eb(f):
-            raise SkipTest("Unable to connect to test database: %s" % (
-                    f.getErrorMessage(),))
-        d = self._sdb(dbname)
-        d.addErrback(_eb)
+        try:
+            yield self._sdb(dbname)
+        except Exception as e:
+            raise SkipTest('Unable to connect to test database: {0}'.format(e))
 
-        def add_callback(func, *args, **kw):
-            # This function exists to create a closure around a
-            # variable in the correct scope. If we just add the
-            # callback directly in the loops below, we only get the
-            # final value of "table", not each intermediate value.
-            d.addCallback(lambda _: func(self.db, *args, **kw))
         for table in reversed(tables):
-            add_callback(table.drop_table, cascade=True)
+            yield table.drop_table(self.db, cascade=True)
         for table in tables:
-            add_callback(table.create_table)
-        return d
+            yield table.create_table(self.db)
 
+    @inlineCallbacks
     def shutdown_db(self):
-        d = succeed(None)
-
-        def add_callback(func, *args, **kw):
-            # This function exists to create a closure around a
-            # variable in the correct scope. If we just add the
-            # callback directly in the loops below, we only get the
-            # final value of "table", not each intermediate value.
-            d.addCallback(lambda _: func(self.db, *args, **kw))
         for tbl in reversed(self._test_tables):
-            add_callback(tbl.drop_table)
+            yield tbl.drop_table(self.db)
 
-        def _cb(_):
-            close_db(self._dbname)
-            self.db = None
-        return d.addCallback(_cb)
+        close_db(self._dbname)
+        self.db = None
 
 
 class UglyModelTestCaseTest(UglyModelTestCase):
