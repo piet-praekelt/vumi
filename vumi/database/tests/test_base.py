@@ -24,7 +24,7 @@ class UglyModelTestCase(TestCase):
         try:
             get_db(dbname)
             close_db(dbname)
-        except:
+        except Exception:
             pass
 
         try:
