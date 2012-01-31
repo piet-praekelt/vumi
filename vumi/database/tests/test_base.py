@@ -38,6 +38,15 @@ class UglyModelTestCase(TestCase):
 
     @inlineCallbacks
     def setup_db(self, *tables, **kw):
+        """
+        Initialize our database connection, and create the given tables.
+
+        :type tables: list of `UglyModel`
+        :param tables: Models to create tables for.
+        :param dict kw:
+            Optional parameters: ``dbname``
+        :rtype: `Deferred`
+        """
         dbname = kw.pop('dbname', 'test')
         self._test_tables = list(tables)
 
@@ -53,6 +62,9 @@ class UglyModelTestCase(TestCase):
 
     @inlineCallbacks
     def shutdown_db(self):
+        """
+        Drop our tables, and close the database connection.
+        """
         for tbl in reversed(self._test_tables):
             yield tbl.drop_table(self.db)
 

@@ -1,4 +1,11 @@
 # -*- test-case-name: vumi.database.tests.test_base -*-
+"""
+Relational database and :term:`ORM` support.
+
+:type DATABASES: mapping of names to `.adbapi.ConnectionPool`
+:var DATABASES:
+    Global named onnection pool registry.
+"""
 
 from twisted.internet.defer import DeferredList
 from twisted.enterprise import adbapi
@@ -7,6 +14,16 @@ DATABASES = {}
 
 
 def setup_db(name, *args, **kw):
+    """
+    Create the named connection pool.
+
+    Additional parameters are passed to `.adbapi.ConnectionPool` as
+    configuration.
+
+    :param name:
+        The connection pool's identifier. *Not* the database name, necessarily.
+    :raises ValueError: If a connection pool for `name` already exists.
+    """
     if DATABASES.get(name, None):
         raise ValueError("Database %s already exists." % (name,))
     # See twisted ticket #2680 for this.
@@ -18,6 +35,11 @@ def setup_db(name, *args, **kw):
 
 
 def get_db(name):
+    """
+    Return the named connection pool.
+
+    :raises ValueError: If the named pool does not exist.
+    """
     db = DATABASES.get(name, None)
     if db:
         return db
@@ -25,6 +47,9 @@ def get_db(name):
 
 
 def close_db(name):
+    """
+    Close the named connection pool.
+    """
     db = DATABASES.get(name, None)
     if db:
         db.close()
@@ -56,6 +81,21 @@ class TableNamePrefixFormatter(object):
 
 
 class UglyModel(object):
+    """
+    Rudimentary table model. Don't rely on this too much.
+
+    :cvar str TABLE_NAME:
+        Subclasses must override this.
+    :type TABLE_PREFIX: `str` or `None`
+    :cvar TABLE_PREFIX:
+        Optional table name prefix (see `TableNamePrefixFormatter`).
+    :type fields: sequence of (``name``, ``type``)
+    :cvar fields:
+        Columns in this table.
+    :type indexes: sequence of names
+    :cvar indexes:
+        Columns to create indexes for.
+    """
     TABLE_NAME = None
     TABLE_PREFIX = None
     fields = ()
