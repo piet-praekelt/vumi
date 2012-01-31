@@ -2,7 +2,7 @@ from datetime import datetime
 
 import pytz
 from twisted.trial.unittest import TestCase, SkipTest
-from twisted.internet.defer import succeed, inlineCallbacks
+from twisted.internet.defer import inlineCallbacks
 
 from vumi.tests.utils import UTCNearNow
 from vumi.database.base import (setup_db, get_db, close_db, UglyModel,
