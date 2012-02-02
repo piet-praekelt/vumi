@@ -103,7 +103,9 @@ class UglyModel(object):
 
     def __init__(self, txn, *args):
         if len(args) != len(self.fields):
-            raise ValueError("Bad values.")
+            raise TypeError(
+                'expected {expected} field values, got {got}: {args!r}'.format(
+                    expected=len(self.fields), got=len(args), args=args))
         for f, v in zip([f[0] for f in self.fields], args):
             setattr(self, f, v)
         self.txn = txn
