@@ -448,7 +448,7 @@ class Publisher(object):
     delivery_mode = 2  # save to disk
 
     def start(self, channel):
-        log.msg("Started the publisher")
+        log.msg('Starting publisher: {0}'.format(self))
         self.channel = channel
         self.bound_routing_keys = {}
 
