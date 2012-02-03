@@ -125,7 +125,7 @@ class ApplicationWorker(Worker):
 
     def teardown_application(self):
         """
-        Clean-up of setup done in setup_application should happen here.
+        Clean-up of setup done in `setup_application` should happen here.
         """
         pass
 
@@ -155,20 +155,25 @@ class ApplicationWorker(Worker):
         return handler(message)
 
     def consume_user_message(self, message):
-        """Respond to user message."""
+        """
+        Respond to user message.
+
+        :type message: `vumi.message.Message`
+        """
         pass
 
     def new_session(self, message):
         """Respond to a new session.
 
-        Defaults to calling consume_user_message.
+        Defaults to calling `consume_user_message`.
         """
         return self.consume_user_message(message)
 
     def close_session(self, message):
         """Close a session.
 
-        The .reply_to() method should not be called when the session is closed.
+        The `.reply_to()` method should not be called when the session is
+        closed.
         """
         pass
 
