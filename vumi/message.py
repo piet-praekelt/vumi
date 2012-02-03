@@ -1,6 +1,7 @@
 # -*- test-case-name: vumi.tests.test_message -*-
 
 import json
+from collections import MutableMapping
 from uuid import uuid4
 from datetime import datetime
 
@@ -38,7 +39,7 @@ def to_json(obj):
     return json.dumps(obj, cls=JSONMessageEncoder)
 
 
-class Message(object):
+class Message(MutableMapping):
     """
     Start of a somewhat unified message object to be
     used internally in Vumi and while being in transit
@@ -98,10 +99,13 @@ class Message(object):
     def __repr__(self):
         return '<{0.__name__} payload={1!r}>'.format(type(self), self.payload)
 
-    def __eq__(self, other):
-        if isinstance(other, Message):
-            return self.payload == other.payload
-        return False
+    # Implement abstract methods for MutableMapping.
+
+    def __iter__(self):
+        return iter(self.payload)
+
+    def __len__(self):
+        return len(self.payload)
 
     def __getitem__(self, key):
         return self.payload[key]
@@ -109,11 +113,8 @@ class Message(object):
     def __setitem__(self, key, value):
         self.payload[key] = value
 
-    def get(self, key, default=None):
-        return self.payload.get(key, default)
-
-    def items(self):
-        return self.payload.items()
+    def __delitem__(self, key):
+        del self.payload[key]
 
 
 class TransportMessage(Message):
