@@ -4,7 +4,7 @@ import json
 from uuid import uuid4
 from datetime import datetime
 
-from errors import MissingMessageField, InvalidMessageField
+from vumi.errors import MissingMessageField, InvalidMessageField
 
 # This is the date format we work with internally
 VUMI_DATE_FORMAT = "%Y-%m-%d %H:%M:%S.%f"
