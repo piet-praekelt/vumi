@@ -11,7 +11,11 @@ class MessageTest(TestCase):
         self.assertEqual(Message(a=5), Message(a=5))
         self.assertNotEqual(Message(a=5), Message(b=5))
         self.assertNotEqual(Message(a=5), Message(a=6))
-        self.assertNotEqual(Message(a=5), {'a': 5})
+        self.assertEqual(Message(a=5), {'a': 5})
+        # Inverses
+        self.assertFalse(Message(a=5) != Message(a=5))
+        self.assertFalse(Message(a=5) == Message(b=5))
+        self.assertFalse(Message(a=5) == Message(a=6))
 
     def test_transport_message(self):
         msg = TransportMessage(
