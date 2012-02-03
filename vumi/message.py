@@ -77,11 +77,8 @@ class Message(object):
     def from_json(cls, json_string):
         return cls(_process_fields=False, **from_json(json_string))
 
-    def __str__(self):
-        return '<Message payload="%s">' % repr(self.payload)
-
     def __repr__(self):
-        return str(self)
+        return '<{0.__name__} payload={1!r}>'.format(type(self), self.payload)
 
     def __eq__(self, other):
         if isinstance(other, Message):
