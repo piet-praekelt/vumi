@@ -2,6 +2,8 @@
 
 from uuid import uuid4
 import re
+from collections import defaultdict
+from functools import partial
 
 from twisted.internet import reactor
 from twisted.internet.defer import inlineCallbacks, returnValue, Deferred
@@ -91,7 +93,7 @@ class FakeAMQPBroker(object):
         self.queues = {}
         self.exchanges = {}
         self.channels = []
-        self.dispatched = {}
+        self.dispatched = defaultdict(partial(defaultdict, list))
         self._delivering = None
 
     def _get_queue(self, queue):
@@ -149,8 +151,7 @@ class FakeAMQPBroker(object):
         return Message(mkMethod("cancel-ok", 31), [("consumer_tag", tag)])
 
     def basic_publish(self, exchange, routing_key, content):
-        exc = self.dispatched.setdefault(exchange, {})
-        exc.setdefault(routing_key, []).append(content)
+        self.dispatched[exchange][routing_key].append(content)
         if exchange not in self.exchanges:
             # This is to test, so we don't care about missing queues
             return None
@@ -246,7 +247,7 @@ class FakeAMQPBroker(object):
         del self.dispatched[exchange][rkey][:]
 
     def get_dispatched(self, exchange, rkey):
-        return self.dispatched.get(exchange, {}).get(rkey, [])
+        return self.dispatched[exchange][rkey]
 
     def get_messages(self, exchange, rkey):
         contents = self.get_dispatched(exchange, rkey)

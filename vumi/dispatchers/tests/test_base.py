@@ -196,7 +196,7 @@ class TestBaseDispatchWorker(TestCase, MessageMakerMixIn):
             self.assertEqual([], self._amqp.get_messages('vumi', rkey))
 
     def clear_dispatched(self):
-        self._amqp.dispatched = {}
+        self._amqp.dispatched.clear()
 
     @inlineCallbacks
     def test_inbound_message_routing(self):
@@ -352,7 +352,7 @@ class TestTransportToTransportRouter(TestCase, MessageMakerMixIn):
             self.assertEqual([], self._amqp.get_messages('vumi', rkey))
 
     def clear_dispatched(self):
-        self._amqp.dispatched = {}
+        self._amqp.dispatched.clear()
 
     @inlineCallbacks
     def test_inbound_message_routing(self):
