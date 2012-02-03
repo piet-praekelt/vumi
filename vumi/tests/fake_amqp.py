@@ -89,6 +89,12 @@ def mk_get_ok(body, exchange, routing_key, dtag):
 
 
 class FakeAMQPBroker(object):
+    """
+    :ivar dispatched:
+        Dispatched messages, as a mapping of
+        ``dispatched[exchange][routing_key]`` to lists of `Message`.
+    """
+
     def __init__(self):
         self.queues = {}
         self.exchanges = {}
@@ -244,12 +250,26 @@ class FakeAMQPBroker(object):
         return done
 
     def clear_messages(self, exchange, rkey):
+        """
+        Discard all messages dispatched to the given routing key.
+        """
         del self.dispatched[exchange][rkey][:]
 
     def get_dispatched(self, exchange, rkey):
+        """
+        Return all AMQP messages dispatched to the given routing key.
+
+        :rtype: list of `.fake_amqp.Message`
+        """
         return self.dispatched[exchange][rkey]
 
     def get_messages(self, exchange, rkey):
+        """
+        like `get_dispatched()`, but parse the result as Vumi messages.
+
+        :raises XXX:
+        :rtype: list of `vumi.message.Message`
+        """
         contents = self.get_dispatched(exchange, rkey)
         messages = [VumiMessage.from_json(content.body)
                     for content in contents]
