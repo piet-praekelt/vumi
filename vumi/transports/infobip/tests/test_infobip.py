@@ -7,6 +7,7 @@ from twisted.internet.defer import inlineCallbacks, returnValue
 
 from vumi.utils import http_request
 from vumi.transports.infobip.infobip import InfobipTransport
+from vumi.transports.failures import PermanentFailure
 from vumi.message import TransportUserMessage
 from vumi.tests.utils import get_stubbed_worker, FakeRedis, LogCatcher
 
@@ -254,11 +255,12 @@ class TestInfobipUssdTransport(TestCase):
             self.broker.publish_message("vumi", "test_infobip.outbound", msg)
             yield self.broker.kick_delivery()
             [error] = logger.errors
+        self.flushLoggedErrors(PermanentFailure)
 
-        [errmsg] = error['message']
-        self.assertTrue(errmsg.startswith("'Infobip transport cannot process"
+        errmsg = error['why']
+        self.assertTrue(errmsg.startswith("Infobip transport cannot process"
                                           " outbound message that is not a"
-                                          " reply:"))
+                                          " reply:"), errmsg)
 
         [msg] = yield self.broker.wait_messages("vumi",
                                                 "test_infobip.failures",

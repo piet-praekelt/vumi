@@ -251,7 +251,8 @@ class InfobipTransport(HttpRpcTransport):
                 self.publish_ack(message['message_id'],
                                  sent_message_id=response_id)
         else:
-            log.err("Infobip transport cannot process outbound message that"
-                    " is not a reply: %r" % message)
-            raise PermanentFailure("Infobip transport cannot process outbound"
-                                   " message that is not a reply.""")
+            e = PermanentFailure("Infobip transport cannot process outbound"
+                                 " message that is not a reply.")
+            log.err(e, "Infobip transport cannot process outbound message that"
+                       " is not a reply: %r" % message)
+            raise e
