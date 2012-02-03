@@ -42,10 +42,11 @@ class Message(object):
     """
     Start of a somewhat unified message object to be
     used internally in Vumi and while being in transit
-    over AMQP
+    over AMQP.
 
-    scary transport format -> Vumi Transport -> Unified Message -> Vumi Worker
+    Scary transport format -> Vumi Transport -> Unified Message -> Vumi Worker
 
+    :ivar dict payload: The message payload.
     """
 
     def __init__(self, _process_fields=True, **kwargs):
@@ -55,10 +56,27 @@ class Message(object):
         self.validate_fields()
 
     def process_fields(self, fields):
+        """
+        Hook to process the message payload.
+
+        This implementation returns the fields unmodified. Subclasses can
+        extend this to provide default and computed message fields.
+
+        :param dict fields: Message fields supplied as input.
+        :rtype: `dict`
+        :returns: Fields to use as :attr:`payload`.
+        """
         return fields
 
     def validate_fields(self):
-        pass
+        """
+        Hook to validate the message payload.
+
+        This is called after processing with `process_fields()`.
+
+        :raises vumi.errors.InvalidMessage:
+        :returns: `None`
+        """
 
     def assert_field_present(self, *fields):
         for field in fields:
