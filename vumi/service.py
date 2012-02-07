@@ -522,6 +522,12 @@ class Publisher(object):
 
     @inlineCallbacks
     def publish(self, message, **kwargs):
+        """
+        Publish the given AMPQ message.
+
+        :raises Closed:
+        :rtype: `Deferred`
+        """
         exchange_name = kwargs.get('exchange_name') or self.exchange_name
         routing_key = kwargs.get('routing_key') or self.routing_key
         require_bind = kwargs.get('require_bind', self.require_bind)
@@ -531,13 +537,21 @@ class Publisher(object):
                                          routing_key=routing_key)
 
     def publish_message(self, message, **kwargs):
+        """
+        Helper: `publish_raw()` the given :class:`vumi.message.Message`.
+        """
         return self.publish_raw(message.to_json(), **kwargs)
 
     def publish_json(self, data, **kw):
-        """helper method"""
+        """
+        Helper: `publish_raw()` the given object encoded to JSON.
+        """
         return self.publish_raw(json.dumps(data, cls=json.JSONEncoder), **kw)
 
     def publish_raw(self, data, **kwargs):
+        """
+        Helper: `publish()` the given raw data.
+        """
         amq_message = Content(data)
         amq_message['delivery mode'] = kwargs.pop('delivery_mode',
                 self.delivery_mode)

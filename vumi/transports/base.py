@@ -205,6 +205,8 @@ class Transport(Worker):
         """
         This must be overridden to read outbound messages and do the right
         thing with them.
+
+        :rtype: `.Deferred` or `None`
         """
         raise NotImplementedError()
 
