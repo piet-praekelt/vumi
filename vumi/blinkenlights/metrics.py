@@ -47,8 +47,7 @@ class MetricManager(Publisher):
         super(MetricManager, self).start(channel)
         self._task = LoopingCall(self._publish_metrics)
         done = self._task.start(self._publish_interval, now=False)
-        done.addErrback(lambda failure: log.err(failure,
-                        "MetricManager publishing task died"))
+        done.addErrback(log.err, 'MetricManager publishing task died')
 
     def stop(self):
         """Stop publishing metrics."""
