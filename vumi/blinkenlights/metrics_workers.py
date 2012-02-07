@@ -204,7 +204,7 @@ class MetricAggregator(Worker):
 
         self._task = LoopingCall(self.check_buckets)
         done = self._task.start(self.bucket_size, False)
-        done.addErrback(log.err, 'MetricAggregator bucket checking task died'))
+        done.addErrback(log.err, 'MetricAggregator bucket checking task died')
 
     def check_buckets(self):
         """Periodically clean out old buckets and calculate aggregates."""
