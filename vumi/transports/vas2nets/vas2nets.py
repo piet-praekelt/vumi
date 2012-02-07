@@ -113,7 +113,7 @@ class ReceiveSMSResource(Resource):
             request.write(msg)
         except Exception, e:
             request.setResponseCode(http.INTERNAL_SERVER_ERROR)
-            log.err("Error processing request: %s" % (request,))
+            log.err(None, "Error processing request: %s" % (request,))
         request.finish()
 
     def render(self, request):
@@ -167,7 +167,7 @@ class DeliveryReceiptResource(Resource):
             request.write(msg)
         except Exception, e:
             request.setResponseCode(http.INTERNAL_SERVER_ERROR)
-            log.err("Error processing request: %s" % (request,))
+            log.err(None, "Error processing request: %s" % (request,))
         request.finish()
 
     def render(self, request):

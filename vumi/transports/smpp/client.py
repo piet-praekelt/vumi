@@ -454,10 +454,9 @@ class EsmeTransceiver(Protocol):
         else:
             try:
                 return message.decode(codec)
-            except Exception, e:
-                log.msg("Error decoding message with data_coding=%s" % (
+            except Exception:
+                log.err(None, "Error decoding message with data_coding=%s" % (
                         data_coding,))
-                log.err(e)
         return message
 
     def handle_deliver_sm(self, pdu):

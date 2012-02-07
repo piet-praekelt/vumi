@@ -145,7 +145,7 @@ class Transport(Worker):
                     reason=traceback))
             self.failure_published()
         except:
-            log.err("Error publishing failure: %s, %s, %s"
+            log.err(None, "Error publishing failure: %s, %s, %s"
                     % (message, exception, traceback))
             raise
 

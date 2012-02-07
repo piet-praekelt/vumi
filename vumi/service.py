@@ -122,8 +122,8 @@ class WorkerAMQClient(AMQClient):
                                     self.vumi_options['password'])
         except ConnectionDone:
             log.msg('Lost connection during authentication. Check client credentials?')
-        except Closed as e:
-            log.err(e, 'AMQ channel closed during authentication. Check server configuration?')
+        except Closed:
+            log.err(None, 'AMQ channel closed during authentication. Check server configuration?')
         else:
             # authentication was successful
             log.msg("Got an authenticated connection")
@@ -379,8 +379,8 @@ class Consumer(object):
                 while self.keep_consuming:
                     message = yield self.queue.get()
                     yield self.consume(message)
-            except txamqp.queue.Closed, e:
-                log.err(e, 'Queue has closed')
+            except txamqp.queue.Closed:
+                log.err(None, 'Queue has closed')
 
         read_messages()
         yield None

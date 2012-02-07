@@ -286,8 +286,8 @@ class SmppTransport(Transport):
         #       better.
         try:
             return self.publish_message(**message)
-        except Exception, e:
-            log.err(e)
+        except Exception:
+            log.err()
 
     def send_smpp(self, message):
         log.msg("Sending SMPP message: %s" % (message))
