@@ -231,6 +231,7 @@ class InfobipTransport(HttpRpcTransport):
             message_dict["transport_metadata"] = transport_metadata
             self.publish_message(**message_dict)
 
+    @inlineCallbacks
     def handle_outbound_message(self, message):
         if message.payload.get('in_reply_to'):
             should_close = (message['session_event']
@@ -248,8 +249,8 @@ class InfobipTransport(HttpRpcTransport):
                                        " original request when attempting"
                                        " to reply.")
             else:
-                self.publish_ack(message['message_id'],
-                                 sent_message_id=response_id)
+                yield self.publish_ack(message['message_id'],
+                                       sent_message_id=response_id)
         else:
             log.err("Infobip transport cannot process outbound message that"
                     " is not a reply: %r" % message)

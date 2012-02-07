@@ -63,8 +63,8 @@ class TwitterTransport(Transport):
         """
         log.msg("Twitter transport sending %r" % (message,))
         post_id = yield self.twitter.update(message['content'])
-        self.publish_ack(user_message_id=message['message_id'],
-                            sent_message_id=post_id)
+        yield self.publish_ack(user_message_id=message['message_id'],
+                               sent_message_id=post_id)
 
     @property
     def last_reply_timestamp(self):
