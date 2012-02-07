@@ -215,6 +215,7 @@ class SmppTransport(Transport):
                 kwargs['sequence_number']))
         else:
             self.r_delete_for_sequence(kwargs['sequence_number'])
+            # XXX no errbacks
             if kwargs['command_status'] == 'ESME_ROK':
                 # The sms was submitted ok
                 self.submit_sm_success(sent_sms_id, transport_msg_id)
@@ -228,6 +229,7 @@ class SmppTransport(Transport):
             transport_msg_id, sent_sms_id))
         log.msg("PUBLISHING ACK: (%s -> %s)" % (
             sent_sms_id, transport_msg_id))
+        # XXX no errback
         self.publish_ack(
             user_message_id=sent_sms_id,
             sent_message_id=transport_msg_id)
@@ -239,6 +241,7 @@ class SmppTransport(Transport):
                 sent_sms_id))
         else:
             self.r_delete_message(sent_sms_id)
+            # XXX no errback
             self.failure_publisher.publish_message(FailureMessage(
                     message=error_message.payload,
                     failure_code=None,

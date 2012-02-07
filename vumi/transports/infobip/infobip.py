@@ -229,6 +229,7 @@ class InfobipTransport(HttpRpcTransport):
             message_dict["transport_type"] = self.config.get('transport_type',
                                                              'ussd')
             message_dict["transport_metadata"] = transport_metadata
+            # XXX no errback
             self.publish_message(**message_dict)
 
     @inlineCallbacks

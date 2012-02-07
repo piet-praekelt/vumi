@@ -61,6 +61,7 @@ class IntegratHttpResource(Resource):
         transport_metadata = {
             'session_id': hxg_msg['SessionID'],
             }
+        # XXX no errback
         self.publish_message(
             from_addr=normalize_msisdn(hxg_msg['MSISDN']),
             to_addr=hxg_msg['ConnStr'],
@@ -101,6 +102,7 @@ class IntegratTransport(Transport):
         """
         self.web_resource = yield self.start_web_resources(
             [
+                # XXX no errback for publish_message()
                 (IntegratHttpResource(self.transport_name,
                     self.transport_type, self.publish_message), self.web_path),
                 (HealthResource(), 'health'),

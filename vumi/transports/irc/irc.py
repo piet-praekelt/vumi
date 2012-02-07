@@ -120,6 +120,7 @@ class VumiBotProtocol(irc.IRCClient):
         """This will get called when the bot sees someone do an action."""
         irc_msg = IrcMessage(sender, 'ACTION', recipient, message,
                              self.nickname)
+        # XXX no errback
         self.publish_message(irc_msg)
 
     # irc callbacks
@@ -219,6 +220,7 @@ class IrcTransport(Transport):
                 'irc_channel': irc_channel,
                 },
             }
+        # XXX no errback
         self.publish_message(**message_dict)
 
     @inlineCallbacks

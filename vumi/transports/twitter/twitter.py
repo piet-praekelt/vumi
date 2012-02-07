@@ -85,6 +85,7 @@ class TwitterTransport(Transport):
         """
         if self.last_reply_timestamp == None or \
             message.published > self.last_reply_timestamp:
+            # XXX no errback
             self.publish_message(
                 message_id=message.id,
                 content=message.text,
@@ -103,6 +104,7 @@ class TwitterTransport(Transport):
         event type as these messages aren't necessarily part of a
         conversation.
         """
+        # XXX no errback
         self.publish_message(
             message_id=status.id,
             content=status.text,

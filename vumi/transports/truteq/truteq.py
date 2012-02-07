@@ -139,6 +139,7 @@ class TruteqTransport(Transport):
             ussd_code = self.get_ussd_code(msisdn)
             text = message
 
+        # XXX no errback
         self.publish_message(
             from_addr=msisdn,
             to_addr=ussd_code,

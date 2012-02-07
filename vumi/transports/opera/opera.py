@@ -132,6 +132,7 @@ class OperaTransport(Transport):
         internal_status = status_map.get(receipt.status, 'failed')
         internal_message_id = self.get_message_id_for_identifier(
             receipt.reference)
+        # XXX no errback
         self.publish_delivery_report(internal_message_id, internal_status)
 
     @inlineCallbacks
@@ -156,7 +157,7 @@ class OperaTransport(Transport):
             [
                 (OperaReceiptResource(self.handle_raw_incoming_receipt),
                  self.web_receipt_path),
-                (OperaReceiveResource(self.publish_message),
+                (OperaReceiveResource(self.publish_message),  # XXX no errback
                  self.web_receive_path),
                 (OperaHealthResource(), 'health'),
             ],

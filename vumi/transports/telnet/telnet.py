@@ -89,6 +89,7 @@ class TelnetServerTransport(Transport):
     def send_inbound_message(self, client, text, session_event):
         from_addr = str(client.transport.getPeer().host)
         transport_metadata = {'session_id': id(client)}
+        # XXX no errback
         self.publish_message(
             from_addr=from_addr,
             to_addr=self._to_addr,

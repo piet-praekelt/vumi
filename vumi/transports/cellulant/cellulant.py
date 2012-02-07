@@ -94,6 +94,7 @@ class CellulantTransport(HttpRpcTransport):
             transport_metadata = {
                 'session_id': request.args.get('sessionID')[0],
             }
+            # XXX no errback
             self.publish_message(
                 message_id=message_id,
                 content=request.args.get('INPUT')[0],

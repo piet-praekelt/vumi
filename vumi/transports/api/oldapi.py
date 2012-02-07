@@ -74,6 +74,7 @@ class OldSimpleHttpTransport(HttpRpcTransport):
                 'OldSimpleHttpTransport sending from %s to %s message "%s"' % (
                     from_addr, to_addr, content))
 
+            # XXX no errback
             self.publish_message(
                 message_id=message_id,
                 content=content,
@@ -131,6 +132,7 @@ class OldTemplateHttpTransport(OldSimpleHttpTransport):
             from_addr = from_msisdn
             log.msg(('OldTemplateHttpTransport sending from %s to %s '
                      'message "%s"') % (from_addr, to_addr, content))
+            # XXX no errback
             self.publish_message(
                 message_id=message_id,
                 content=content,

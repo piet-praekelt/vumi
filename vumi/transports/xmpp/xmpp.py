@@ -156,6 +156,7 @@ class XMPPTransport(Transport):
         roster = TransportRosterClientProtocol()
         roster.setHandlerParent(self.xmpp_client)
 
+        # XXX no errbacks for publish_message() and _setup_message_consumer()
         self.xmpp_protocol = self._xmpp_protocol(
             self.jid, self.publish_message, self._setup_message_consumer)
         self.xmpp_protocol.setHandlerParent(self.xmpp_client)

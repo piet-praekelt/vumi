@@ -18,6 +18,7 @@ class VodacomMessagingTransport(HttpRpcTransport):
             session_event = TransportUserMessage.SESSION_RESUME
             to_addr = ''
         transport_metadata = {'session_id': ussd_session_id}
+        # XXX no errback
         self.publish_message(
                 message_id=msgid,
                 content=content,
