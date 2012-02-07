@@ -476,7 +476,7 @@ class Publisher(object):
                     bound_routing_keys[b['routing_key']] = \
                             bound_routing_keys.get(b['routing_key'], []) + \
                             [b['destination']]
-        except:
+        except Exception:
             bound_routing_keys = {"bindings": "undetected"}
         returnValue(bound_routing_keys)
 

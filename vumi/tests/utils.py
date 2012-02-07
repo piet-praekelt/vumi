@@ -288,7 +288,7 @@ class FakeRedis(object):
         old_value = self._data.get(key)
         try:
             new_value = int(old_value) + increment
-        except:
+        except (TypeError, ValueError):
             new_value = increment
         self.set(key, new_value)
         return new_value

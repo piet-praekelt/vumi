@@ -375,7 +375,7 @@ class EsmeTransceiver(Protocol):
             self.lc_enquire.stop()
             del self.lc_enquire
             log.msg('%s stop & del enquire link looping call' % self.name)
-        except:
+        except Exception:
             pass
 
     def dataReceived(self, data):

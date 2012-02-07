@@ -144,7 +144,7 @@ class Transport(Worker):
                     message=message.payload, failure_code=failure_code,
                     reason=traceback))
             self.failure_published()
-        except:
+        except Exception:
             log.err(None, "Error publishing failure: %s, %s, %s"
                     % (message, exception, traceback))
             raise

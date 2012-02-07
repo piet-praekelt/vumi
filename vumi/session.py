@@ -241,7 +241,7 @@ class TraversedDecisionTree(PopulatedDecisionTree):
             self.template_current = self.template_history.pop()
             self.data_current = self.data_history.pop()
             self.completed = False
-        except:
+        except Exception:
             pass
 
     def go_up(self):
@@ -293,7 +293,7 @@ class TraversedDecisionTree(PopulatedDecisionTree):
         try:
             more_option = "\n0. " + \
                           self.template_current['more'][self.language]
-        except:
+        except Exception:
             more_option = "\n0. ..."
         que += self.template_current['question'][self.language]
         if type(self.resolve_dc()) == list:
@@ -338,7 +338,7 @@ class TraversedDecisionTree(PopulatedDecisionTree):
                     self.list_pos['offset'] = self.list_pos['offset'] + \
                                               self.list_pos['length']
                     return None
-        except:
+        except Exception:
             pass
         try:
             ans = self.validate(ans, self.template_current.get('validate'))
@@ -363,7 +363,7 @@ class TraversedDecisionTree(PopulatedDecisionTree):
             self.select(t, d)
             if __next == "__finish__":
                 self.__finish()
-        except:
+        except Exception:
             pass
 
     def validate(self, ans, validate):
