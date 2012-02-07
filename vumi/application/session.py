@@ -30,6 +30,7 @@ class SessionManager(object):
         self.r_server = r_server
         self.r_prefix = prefix
 
+        # FIXME generator not consumed?
         self.gc = task.LoopingCall(lambda: self.active_sessions())
         self.gc.start(gc_period)
 
