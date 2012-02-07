@@ -48,11 +48,12 @@ class AggregatedMetricPublisher(Publisher):
     durable = True
     routing_key = "vumi.metrics.aggregates"
 
+    @inlineCallbacks
     def publish_aggregate(self, metric_name, timestamp, value):
         # TODO: perhaps change interface to publish multiple metrics?
         msg = MetricMessage()
         msg.append((metric_name, (), [(timestamp, value)]))
-        self.publish_message(msg)
+        yield self.publish_message(msg)
 
 
 class TimeBucketConsumer(Consumer):
@@ -108,6 +109,7 @@ class TimeBucketPublisher(Publisher):
         md5 = hashlib.md5("%s:%d" % (metric_name, ts_key))
         return int(md5.hexdigest(), 16) % self.buckets
 
+    @inlineCallbacks
     def publish_metric(self, metric_name, aggregates, values):
         timestamp_buckets = {}
         for timestamp, value in values:
@@ -122,7 +124,7 @@ class TimeBucketPublisher(Publisher):
             routing_key = self.ROUTING_KEY_TEMPLATE % bucket
             msg = MetricMessage()
             msg.append((metric_name, aggregates, ts_bucket))
-            self.publish_message(msg, routing_key=routing_key)
+            yield self.publish_message(msg, routing_key=routing_key)
 
 
 class MetricTimeBucket(Worker):
@@ -207,6 +209,7 @@ class MetricAggregator(Worker):
         done.addErrback(lambda failure: log.err(failure,
                         "MetricAggregator bucket checking task died"))
 
+    @inlineCallbacks
     def check_buckets(self):
         """Periodically clean out old buckets and calculate aggregates."""
         # key for previous bucket
@@ -228,8 +231,8 @@ class MetricAggregator(Worker):
                         aggregates.append((agg_metric, agg_value))
 
                 for agg_metric, agg_value in aggregates:
-                    self.publisher.publish_aggregate(agg_metric, ts,
-                                                     agg_value)
+                    yield self.publisher.publish_aggregate(
+                            agg_metric, ts, agg_value)
                 del self.buckets[ts_key]
         self._last_ts_key = current_ts_key
 
@@ -262,8 +265,9 @@ class GraphitePublisher(Publisher):
     delivery_mode = 2
     require_bind = False  # Graphite uses a topic exchange
 
+    @inlineCallbacks
     def publish_metric(self, metric, value, timestamp):
-        self.publish_raw("%f %d" % (value, timestamp), routing_key=metric)
+        yield self.publish_raw("%f %d" % (value, timestamp), routing_key=metric)
 
 
 class GraphiteMetricsCollector(Worker):
@@ -277,9 +281,10 @@ class GraphiteMetricsCollector(Worker):
         self.consumer = yield self.start_consumer(AggregatedMetricConsumer,
                                                   self.consume_metrics)
 
+    @inlineCallbacks
     def consume_metrics(self, metric_name, values):
         for timestamp, value in values:
-            self.graphite_publisher.publish_metric(metric_name, value,
+            yield self.graphite_publisher.publish_metric(metric_name, value,
                                                    timestamp)
 
     def stopWorker(self):

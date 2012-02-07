@@ -5,6 +5,7 @@
 Includes a publisher, a consumer and a set of simple metrics.
 """
 
+from twisted.internet.defer import inlineCallbacks
 from twisted.internet.task import LoopingCall
 from twisted.python import log
 
@@ -56,11 +57,12 @@ class MetricManager(Publisher):
             self._task.stop()
             self._task = None
 
+    @inlineCallbacks
     def _publish_metrics(self):
         msg = MetricMessage()
         for metric in self._metrics:
             msg.append((metric.name, metric.aggs, metric.poll()))
-        self.publish_message(msg)
+        yield self.publish_message(msg)
         if self._on_publish is not None:
             self._on_publish(self)
 
